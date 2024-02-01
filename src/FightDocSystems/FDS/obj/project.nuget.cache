@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KEA3DWLTA82RP5HDsvz0kMpPdN/iYX0N+mIMdXbiO0uhRAMtN9uLpYSKBmP9OXeOV4JvELxRaATwyknlwWJryg==",
+  "dgSpecHash": "vtgJ/z5LPA11+KXT+ol2cic2Uw1sp3xP8bGHuY6YyGpWV68i52rpc/0Q0CPv40UenNCByARm3WNtGqjvnqykJA==",
   "success": true,
-  "projectFilePath": "D:\\Workspace\\.netCore\\src\\FightDocSystems\\src\\FightDocSystems\\FDS\\FDSApi.csproj",
+  "projectFilePath": "G:\\src C#\\FightDocSystyems\\src\\FightDocSystems\\FDS\\FDSApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Neil\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Neil\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
@@ -14,7 +14,6 @@
     "C:\\Users\\Neil\\.nuget\\packages\\microsoft.entityframeworkcore.design\\6.0.26\\microsoft.entityframeworkcore.design.6.0.26.nupkg.sha512",
     "C:\\Users\\Neil\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.26\\microsoft.entityframeworkcore.relational.6.0.26.nupkg.sha512",
     "C:\\Users\\Neil\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\6.0.26\\microsoft.entityframeworkcore.sqlserver.6.0.26.nupkg.sha512",
-    "C:\\Users\\Neil\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\6.0.26\\microsoft.entityframeworkcore.tools.6.0.26.nupkg.sha512",
     "C:\\Users\\Neil\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\Neil\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\6.0.0\\microsoft.extensions.caching.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\Neil\\.nuget\\packages\\microsoft.extensions.caching.memory\\6.0.1\\microsoft.extensions.caching.memory.6.0.1.nupkg.sha512",
