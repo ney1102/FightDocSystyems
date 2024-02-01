@@ -39,16 +39,12 @@ namespace FDSApi.Controllers
         {
             try
             {
-                if (await _authenService.LoginAsync(login.Email, login.Password))
+                var loginResponse = await _authenService.LoginAsync(login.Email, login.Password);
+                if (loginResponse.Succes)
                 {
-                    var token = new JwtSecurityToken(
-                        expires: DateTime.UtcNow.AddMinutes(60));
-                    return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+                    return Ok(loginResponse);
                 }
-                return BadRequest(new
-                {
-                    message = "Username or password incorrect"
-                });
+                else return Unauthorized(loginResponse);
             }
             catch
             {
