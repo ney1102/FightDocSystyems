@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FDSApi", "FDS\FDSApi.csproj", "{200648A2-29FD-4FB7-933D-E13A613FF6B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FDSApi", "FDS\FDSApi.csproj", "{200648A2-29FD-4FB7-933D-E13A613FF6B2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "..\Core\Core.csproj", "{13CB0DE6-9B5F-4285-AD71-C59F74B6130A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "..\Models\Models.csproj", "{021EABE3-3AFB-4319-9BC8-500A2DEA932B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{200648A2-29FD-4FB7-933D-E13A613FF6B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{200648A2-29FD-4FB7-933D-E13A613FF6B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{200648A2-29FD-4FB7-933D-E13A613FF6B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13CB0DE6-9B5F-4285-AD71-C59F74B6130A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13CB0DE6-9B5F-4285-AD71-C59F74B6130A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13CB0DE6-9B5F-4285-AD71-C59F74B6130A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13CB0DE6-9B5F-4285-AD71-C59F74B6130A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{021EABE3-3AFB-4319-9BC8-500A2DEA932B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{021EABE3-3AFB-4319-9BC8-500A2DEA932B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{021EABE3-3AFB-4319-9BC8-500A2DEA932B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{021EABE3-3AFB-4319-9BC8-500A2DEA932B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
