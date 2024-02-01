@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Workspace\\.netCore\\src\\FightDocSystems\\src\\Core\\Core.csproj": {}
+    "G:\\src C#\\FightDocSystyems\\src\\Core\\Core.csproj": {}
   },
   "projects": {
-    "D:\\Workspace\\.netCore\\src\\FightDocSystems\\src\\Core\\Core.csproj": {
+    "G:\\src C#\\FightDocSystyems\\src\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Workspace\\.netCore\\src\\FightDocSystems\\src\\Core\\Core.csproj",
+        "projectUniqueName": "G:\\src C#\\FightDocSystyems\\src\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "D:\\Workspace\\.netCore\\src\\FightDocSystems\\src\\Core\\Core.csproj",
+        "projectPath": "G:\\src C#\\FightDocSystyems\\src\\Core\\Core.csproj",
         "packagesPath": "C:\\Users\\Neil\\.nuget\\packages\\",
-        "outputPath": "D:\\Workspace\\.netCore\\src\\FightDocSystems\\src\\Core\\obj\\",
+        "outputPath": "G:\\src C#\\FightDocSystyems\\src\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Neil\\AppData\\Roaming\\NuGet\\NuGet.Config",

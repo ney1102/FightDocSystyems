@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Workspace\\.netCore\\src\\FightDocSystems\\src\\Models\\Models.csproj",
+      "projectUniqueName": "G:\\src C#\\FightDocSystyems\\src\\Models\\Models.csproj",
       "projectName": "Models",
-      "projectPath": "D:\\Workspace\\.netCore\\src\\FightDocSystems\\src\\Models\\Models.csproj",
+      "projectPath": "G:\\src C#\\FightDocSystyems\\src\\Models\\Models.csproj",
       "packagesPath": "C:\\Users\\Neil\\.nuget\\packages\\",
-      "outputPath": "D:\\Workspace\\.netCore\\src\\FightDocSystems\\src\\Models\\obj\\",
+      "outputPath": "G:\\src C#\\FightDocSystyems\\src\\Models\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Neil\\AppData\\Roaming\\NuGet\\NuGet.Config",

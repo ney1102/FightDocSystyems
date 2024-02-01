@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Workspace\\.netCore\\src\\FightDocSystems\\src\\FightDocSystems\\FDS\\FDSApi.csproj": {}
+    "G:\\src C#\\FightDocSystyems\\src\\FightDocSystems\\FDS\\FDSApi.csproj": {}
   },
   "projects": {
-    "D:\\Workspace\\.netCore\\src\\FightDocSystems\\src\\FightDocSystems\\FDS\\FDSApi.csproj": {
+    "G:\\src C#\\FightDocSystyems\\src\\FightDocSystems\\FDS\\FDSApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Workspace\\.netCore\\src\\FightDocSystems\\src\\FightDocSystems\\FDS\\FDSApi.csproj",
+        "projectUniqueName": "G:\\src C#\\FightDocSystyems\\src\\FightDocSystems\\FDS\\FDSApi.csproj",
         "projectName": "FDSApi",
-        "projectPath": "D:\\Workspace\\.netCore\\src\\FightDocSystems\\src\\FightDocSystems\\FDS\\FDSApi.csproj",
+        "projectPath": "G:\\src C#\\FightDocSystyems\\src\\FightDocSystems\\FDS\\FDSApi.csproj",
         "packagesPath": "C:\\Users\\Neil\\.nuget\\packages\\",
-        "outputPath": "D:\\Workspace\\.netCore\\src\\FightDocSystems\\src\\FightDocSystems\\FDS\\obj\\",
+        "outputPath": "G:\\src C#\\FightDocSystyems\\src\\FightDocSystems\\FDS\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Neil\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -41,26 +41,6 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[6.0.26, )"
-            },
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[6.0.26, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[6.0.26, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[6.0.26, )"
-            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"
