@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Models.Entity.Fight;
 using Models.Entity.User;
 
 namespace Models.Context
@@ -12,6 +13,7 @@ namespace Models.Context
     public class AppDbContext :DbContext
     {
         public DbSet<User> User { get; set; }
+        public DbSet<Airport> Airport { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
