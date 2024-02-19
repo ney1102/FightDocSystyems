@@ -10,15 +10,16 @@ namespace FightApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FightController : ControllerBase
+    public class FlightController : ControllerBase
     {
         private readonly IAirportService _airportService;
         private readonly IFlightService _flightService;
-        public FightController(IAirportService airportService, IFlightService flightService)
+        public FlightController(IAirportService airportService, IFlightService flightService)
         {
             _airportService = airportService;
             _flightService = flightService;
         }
+        // GET: api/Fight
         [HttpGet]
         public async Task<IActionResult> GetAllFlights()
         {
@@ -38,7 +39,7 @@ namespace FightApi.Controllers
                 {
                     return Ok(successResponse);
                 }
-                else return Unauthorized(response);
+                else return Unauthorized(successResponse);
             }
             catch (Exception ex)
             {
