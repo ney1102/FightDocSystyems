@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Models.Entity.Fight;
+using Models.Entity.Fight.Configurations;
 using Models.Entity.User;
 
 namespace Models.Context
@@ -14,6 +15,7 @@ namespace Models.Context
     {
         public DbSet<User> User { get; set; }
         public DbSet<Airport> Airport { get; set; }
+        public DbSet<Flight> Flight { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
@@ -21,7 +23,12 @@ namespace Models.Context
         //{
         //    optionsBuilder.UseSqlServer("ConnectionStrings:DefaultConnection");
         //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new FlightConfiguration());
+        }
 
 
     }

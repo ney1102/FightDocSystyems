@@ -14,6 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAirportService, AirportService>();
+builder.Services.AddScoped<IFlightService, FlightService>();
 
 
 var app = builder.Build();
