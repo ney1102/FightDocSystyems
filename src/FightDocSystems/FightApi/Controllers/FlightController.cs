@@ -71,6 +71,22 @@ namespace FightApi.Controllers
                 });
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> AddNewFlight([FromBody] FlightRequest flight)
+        {
+            try
+            {
+                var response = await _flightService.AddFlightAsync(flight);
+                if (response.Succes==true)
+                {
+                    return Ok(response);
+                }else return Unauthorized(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
         
     }
 }

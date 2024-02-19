@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "..\Models\Models.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{AE61F6B1-1A48-4254-BED0-37CA53F14062}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FightApi", "FightApi\FightApi.csproj", "{7FA2DB97-B723-4066-AF1A-BB704091C00E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlightApi", "FightApi\FlightApi.csproj", "{7FA2DB97-B723-4066-AF1A-BB704091C00E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

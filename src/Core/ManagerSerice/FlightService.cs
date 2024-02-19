@@ -70,5 +70,43 @@ namespace Core.ManagerSerice
             return response;
 
         }
+        public async Task<Response<Flight>> AddFlightAsync(FlightRequest flight)
+        {
+            var response = new Response<Flight>();
+            try
+            {
+                bool isFlightExist = await _appDbContext.Flight.AnyAsync(f => f.FlightNo == flight.FlightNo);
+
+                if (isFlightExist)
+                {
+                    response.Message = "Flight with the same FlightNo already exists";
+                    response.StatusCode = 400;
+                    response.Succes = false;
+                    return response;
+                }
+                    var newFlight = new Flight()
+                {
+                    FlightNo = flight.FlightNo,
+                    DepartureStationID = flight.DepartureStationID,
+                    ArrivalStationID = flight.ArrivalStationID,
+                    DepartureDate = flight.DepartureDate,
+                    CreatedBy = 5,
+                    UpdatedBy = 5,
+                };
+                _appDbContext.Flight.Add(newFlight);
+                await _appDbContext.SaveChangesAsync();
+                response.Data = newFlight;
+                response.StatusCode = 201;
+                response.Message = "Added new flight successfully";
+                response.Succes = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = $"Error: {ex.Message}";
+                response.StatusCode = 500; 
+                response.Succes = false;
+            }
+            return response;
+        }
     }
 }
