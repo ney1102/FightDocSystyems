@@ -14,7 +14,7 @@ namespace Core.InterfaceService
         Task<Response<IEnumerable<Flight>>> GetAllFlightAsync();
         // Trong IFlightService
         Task<IEnumerable<FlightResponse>> ConvertFlightsToResponses(IEnumerable<Flight> flights);
-        Task<Response<Flight>> AddFlightAsync(FlightRequest flight);
+        Task<Response<FlightResponse>> AddFlightAsync(FlightRequest flight);
 
     }
 }

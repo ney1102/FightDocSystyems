@@ -19,15 +19,25 @@ namespace Core.ManagerSerice
         {
             _appDbContext = appDbContext;
         }
-        //public FlightResponse ConvertToFlightResponse(Flight flight)
-        //{
-        //    return new FlightResponse
-        //    {
-        //        FlightNo = flight.FlightNo,
-        //        Route = $"{flight.DepartureStation.Code} - {flight.ArrivalStation.Code}",
-        //        DepartureDate = flight.DepartureDate
-        //    };
-        //}
+        public async Task<FlightResponse> ConvertToFlightResponse(string flightNO)
+        {
+            var result = await  _appDbContext.Flight
+             .Where(f => f.Active == 1 && f.Del_flag == 0 && f.FlightNo == flightNO)
+             .Include(f => f.DepartureStation)
+             .Include(f => f.ArrivalStation)
+             .FirstOrDefaultAsync();
+            if (result != null)
+            {
+                return new FlightResponse
+                {
+                    FlightNo = result.FlightNo,
+                    Route = $"{result.DepartureStation.Code} - {result.ArrivalStation.Code}",
+                    DepartureDate = result.DepartureDate
+                };
+            }
+
+            return null;
+        }
         public async Task<IEnumerable<FlightResponse>> ConvertFlightsToResponses(IEnumerable<Flight> flights)
         {
             return flights.Select(flight => new FlightResponse
@@ -70,9 +80,26 @@ namespace Core.ManagerSerice
             return response;
 
         }
-        public async Task<Response<Flight>> AddFlightAsync(FlightRequest flight)
+        private async Task<Flight> CreateNewFlightAsync(FlightRequest flightRequest)
         {
-            var response = new Response<Flight>();
+            var newFlight = new Flight()
+            {
+                FlightNo = flightRequest.FlightNo,
+                DepartureStationID = flightRequest.DepartureStationID,
+                ArrivalStationID = flightRequest.ArrivalStationID,
+                DepartureDate = flightRequest.DepartureDate,
+                CreatedBy = 5,
+                UpdatedBy = 5,
+            };
+
+            _appDbContext.Flight.Add(newFlight);
+            await _appDbContext.SaveChangesAsync();
+
+            return newFlight;
+        }
+        public async Task<Response<FlightResponse>> AddFlightAsync(FlightRequest flight)
+        {
+            var response = new Response<FlightResponse>();
             try
             {
                 bool isFlightExist = await _appDbContext.Flight.AnyAsync(f => f.FlightNo == flight.FlightNo);
@@ -80,25 +107,19 @@ namespace Core.ManagerSerice
                 if (isFlightExist)
                 {
                     response.Message = "Flight with the same FlightNo already exists";
-                    response.StatusCode = 400;
+                    response.StatusCode = 401;
                     response.Succes = false;
                     return response;
                 }
-                    var newFlight = new Flight()
+                var newFlight = await CreateNewFlightAsync(flight);
+                var data = await ConvertToFlightResponse(newFlight.FlightNo);
+                if (data != null)
                 {
-                    FlightNo = flight.FlightNo,
-                    DepartureStationID = flight.DepartureStationID,
-                    ArrivalStationID = flight.ArrivalStationID,
-                    DepartureDate = flight.DepartureDate,
-                    CreatedBy = 5,
-                    UpdatedBy = 5,
-                };
-                _appDbContext.Flight.Add(newFlight);
-                await _appDbContext.SaveChangesAsync();
-                response.Data = newFlight;
-                response.StatusCode = 201;
-                response.Message = "Added new flight successfully";
-                response.Succes = true;
+                    response.Data = data;
+                }
+                    response.StatusCode = 201;
+                    response.Message = "Added new flight successfully";
+                    response.Succes = true;
             }
             catch (Exception ex)
             {
