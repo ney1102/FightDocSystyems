@@ -24,4 +24,12 @@ namespace Models.Entity
         public int Active { get; set; } = 1;
         public int Del_flag { get; set; } = 0;
     }
+    public class FileEntity : Entity
+    {
+        public string DocumentName { get; set; }
+        public int DocumentType { get; set; }
+        public float DocumentVersion { get; set; } = 1;
+        public string Path { get; set; }
+        public string FileType { get; set; }
+    }
 }

@@ -19,13 +19,13 @@ namespace Core.ManagerSerice
         {
             _appDbContext = appDbContext;
         }
-        public async Task<FlightResponse> ConvertToFlightResponse(string flightNO)
+        private async Task<FlightResponse> ConvertToFlightResponse(string flightNo)
         {
             var result = await  _appDbContext.Flight
-             .Where(f => f.Active == 1 && f.Del_flag == 0 && f.FlightNo == flightNO)
-             .Include(f => f.DepartureStation)
-             .Include(f => f.ArrivalStation)
-             .FirstOrDefaultAsync();
+                                             .Where(f => f.Active == 1 && f.Del_flag == 0 && f.FlightNo == flightNo)
+                                             .Include(f => f.DepartureStation)
+                                             .Include(f => f.ArrivalStation)
+                                             .FirstOrDefaultAsync();
             if (result != null)
             {
                 return new FlightResponse
