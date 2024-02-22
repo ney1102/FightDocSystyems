@@ -11,15 +11,19 @@ using Models.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Core.Enum;
-
+using Models.DTOs.Fight;
+using Models.Entity.Fight;
+using AutoMapper;
 namespace Core.ManagerSerice
 {
     public class DocumentService:IDocumentService
     {
         private readonly AppDbContext _appDbContext;
+        //private readonly IMapper _autoMapper;
         public DocumentService(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
+            //_autoMapper = autoMapper;
         }
         private async Task<Document> IsDocumentSavedAsync(DocumentRequest documentRequest)
         {
@@ -62,10 +66,9 @@ namespace Core.ManagerSerice
 
                 if (resultUploadDoc != null)
                 {
-
                     response.Data= resultUploadDoc;
-                    response.StatusCode = 200;
-                    response.Message = $"Post file ''{documentRequest.DocumentDetail.FileName}'' sucessfuly";
+                    response.StatusCode = 201;
+                    response.Message = $"Post file '{documentRequest.DocumentDetail.FileName}' sucessfuly";
                     response.Succes = true;
                     return response;
                 }
@@ -76,7 +79,6 @@ namespace Core.ManagerSerice
                     response.Succes = false;
                 }
 
-
             }
             catch (Exception ex)
             {
@@ -85,7 +87,54 @@ namespace Core.ManagerSerice
                 response.Succes= false; 
                 return response;
             }
-                    return response;
+            return response;
+
+        }
+        public async Task<IEnumerable<DocumentResponse>> ConvertDocumentsToResponses(IEnumerable<Document> docs)
+        {            
+            return docs.Select(d => new DocumentResponse
+            {
+                DocumentName = d.DocumentName,
+                DocumentType = d.DocumentType,
+                DocumentVersion = d.DocumentVersion,
+                Path = d.Path,                
+            });
+        }
+        public async Task<Response<IEnumerable<DocumentResponse>>> GetDocumentResponsesByFlightIdAsync(int flightId)
+        {
+            var response = new   Response < IEnumerable < DocumentResponse >> ();
+            try
+            {
+                var documents = await _appDbContext.Document.Where(d => d.FlightId == flightId).ToListAsync();
+                if (documents != null && documents.Any())
+                {
+                    var data = await ConvertDocumentsToResponses(documents);
+                    if (data != null)
+                    {
+                        response.Data = data;
+                    }
+                    response.StatusCode = 200;
+                    response.Message = "Documents retrieved successfully";
+                    response.Succes = true;
+                    
+                }
+                else
+                {
+                    response.StatusCode = 401;
+                    response.Message = $"No Documents found";
+                    response.Succes = false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = 500;
+                response.Message = ex.Message;
+                response.Succes = false;
+                
+            }
+            return response;
+
         }
     }
 }

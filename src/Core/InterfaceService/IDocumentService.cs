@@ -13,5 +13,6 @@ namespace Core.InterfaceService
     public interface IDocumentService
     {
         Task<Response<Document>> PostDocumentAsync(DocumentRequest documentRequest);
+        Task<Response<IEnumerable<DocumentResponse>>> GetDocumentResponsesByFlightIdAsync(int  flightId);
     }
 }

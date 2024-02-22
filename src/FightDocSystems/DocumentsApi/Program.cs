@@ -1,5 +1,6 @@
 using Core.InterfaceService;
 using Core.ManagerSerice;
+using Core.MapperProfile;
 using Microsoft.EntityFrameworkCore;
 using Models.Context;
 
@@ -8,7 +9,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 var AllowOrigins = "_allowOrigins";
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
-
+//builder.Services.AddCustomMapper<DocumentProfile>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

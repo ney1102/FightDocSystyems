@@ -11,9 +11,9 @@ namespace Core.InterfaceService
 {
     public interface IFlightService
     {
-        Task<Response<IEnumerable<Flight>>> GetAllFlightAsync();
+        Task<Response<IEnumerable<FlightResponse>>> GetAllFlightAsync();
         // Trong IFlightService
-        Task<IEnumerable<FlightResponse>> ConvertFlightsToResponses(IEnumerable<Flight> flights);
+        //Task<IEnumerable<FlightResponse>> ConvertFlightsToResponses(IEnumerable<Flight> flights);
         Task<Response<FlightResponse>> AddFlightAsync(FlightRequest flight);
 
     }

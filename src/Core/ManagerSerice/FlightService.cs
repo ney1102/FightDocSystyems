@@ -25,6 +25,7 @@ namespace Core.ManagerSerice
                                              .Where(f => f.Active == 1 && f.Del_flag == 0 && f.FlightNo == flightNo)
                                              .Include(f => f.DepartureStation)
                                              .Include(f => f.ArrivalStation)
+                                             .Include(f=>f.Documents.Where(d => d.Active == 1 && d.Del_flag == 0 && d.FlightId == f.Id))
                                              .FirstOrDefaultAsync();
             if (result != null)
             {
@@ -32,7 +33,8 @@ namespace Core.ManagerSerice
                 {
                     FlightNo = result.FlightNo,
                     Route = $"{result.DepartureStation.Code} - {result.ArrivalStation.Code}",
-                    DepartureDate = result.DepartureDate
+                    DepartureDate = result.DepartureDate,
+                    Documents = result.Documents
                 };
             }
 
@@ -44,22 +46,25 @@ namespace Core.ManagerSerice
             {
                 FlightNo = flight.FlightNo,
                 Route = $"{flight.DepartureStation.Code} - {flight.ArrivalStation.Code}",
-                DepartureDate = flight.DepartureDate
-            });
+                DepartureDate = flight.DepartureDate,
+                Documents = flight.Documents,
+            });;
         }
-        public async Task<Response<IEnumerable<Flight>>> GetAllFlightAsync()
+        public async Task<Response<IEnumerable<FlightResponse>>> GetAllFlightAsync()
         {
-            var response = new Response<IEnumerable<Flight>>();
+            var response = new Response<IEnumerable<FlightResponse>>();
             try
             {
-                var flights = await _appDbContext.Flight.Where(f => f.Active == 1 && f.Del_flag == 0)
+                var flights = await _appDbContext.Flight.Where(f => f.Active == 1 && f.Del_flag == 0)                                                        
                                                         .Include(f => f.DepartureStation)
                                                         .Include(f => f.ArrivalStation)
+                                                        .Include(f => f.Documents.Where(d=>d.Active==1))                                                           
                                                         .ToListAsync();
+                                                        
                 //var flightResponses = flights.Select(ConvertToFlightResponse).ToList();
                 if (flights != null && flights.Any())
                 {
-                    response.Data = flights;
+                    response.Data =  await ConvertFlightsToResponses(flights);
                     response.StatusCode = 200;
                     response.Message = "Flights retrieved successfully";
                     response.Succes = true;

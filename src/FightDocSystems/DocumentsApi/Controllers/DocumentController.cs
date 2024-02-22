@@ -15,7 +15,24 @@ namespace DocumentsApi.Controllers
         {
             _documentService = documentService;
         }
-       
+        [HttpGet]
+        public async Task<IActionResult> GetDocumentsByFlightIdAsync(int flightId)
+        {
+            try
+            {
+                var response = await _documentService.GetDocumentResponsesByFlightIdAsync(flightId);
+                if (response.Succes)
+                {
+                    return Ok(response);
+                }
+                else return Unauthorized(response);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        
         [HttpPost]
         public async Task<IActionResult> PostSingleDocumentAsync([FromForm]DocumentRequest document)
         {

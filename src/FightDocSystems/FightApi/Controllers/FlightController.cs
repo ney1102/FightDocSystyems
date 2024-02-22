@@ -1,4 +1,6 @@
-﻿using Core.InterfaceService;
+﻿using System.Text.Json.Serialization;
+using System.Text.Json;
+using Core.InterfaceService;
 using Microsoft.AspNetCore.Mvc;
 using Models.DTOs;
 using Models.DTOs.Auth;
@@ -26,20 +28,15 @@ namespace FightApi.Controllers
             try
             {
                 var response = await _flightService.GetAllFlightAsync();
-                var flightResponses = await _flightService.ConvertFlightsToResponses(response.Data);
-                var successResponse = new Response<IEnumerable<FlightResponse>>
-                {
-                    Data = flightResponses,
-                    Message = response.Message,
-                    StatusCode = response.StatusCode,
-                    Succes = response.Succes
-                };
 
-                if (response.Succes== true)
+                if (response.Succes == true)
                 {
-                    return Ok(successResponse);
+                    return Ok(response);
                 }
-                else return Unauthorized(successResponse);
+                else
+                {
+                    return Unauthorized(response);
+                }
             }
             catch (Exception ex)
             {
@@ -72,7 +69,7 @@ namespace FightApi.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> AddNewFlight([FromBody] FlightRequest flight)
+        public async Task<IActionResult> AddNewFlight([FromForm] FlightRequest flight)
         {
             try
             {

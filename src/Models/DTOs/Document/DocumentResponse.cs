@@ -9,5 +9,10 @@ namespace Models.DTOs.Document
 {
     public class DocumentResponse
     {
+        public string DocumentName { get; set; }
+        public int DocumentType { get; set; }
+        public float DocumentVersion { get; set; }
+        public string Path { get; set; }
+        
     }
 }
