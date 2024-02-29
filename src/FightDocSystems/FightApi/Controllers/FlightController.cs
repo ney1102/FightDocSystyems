@@ -68,12 +68,51 @@ namespace FightApi.Controllers
                 });
             }
         }
+        //Get: api/Flight/{id}
+        [HttpGet("FlightsByDepartureStation")]
+        public async Task<IActionResult> GetFlightsByDepartureStationAsync(int departureStationId)
+        {
+            var response = await _flightService.GetFlightsByDepartureAsync(departureStationId);
+            try
+            {
+                if (response.Succes)
+                    return Ok(response);
+                else return Unauthorized(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex,
+                    statusCode = "500"
+                });
+            }
+        }
+        [HttpGet("FlightsByArrivalStation")]
+        public async Task<IActionResult> GetFlightsByArrivalStationAsync(int arrivalStationID)
+        {
+            var response = await _flightService.GetFlightsByArrivalAsync(arrivalStationID);
+            try
+            {
+                if (response.Succes)
+                    return Ok(response);
+                else return Unauthorized(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex,
+                    statusCode = "500"
+                });
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> AddNewFlight([FromForm] FlightRequest flight)
         {
+                var response = await _flightService.AddFlightAsync(flight);
             try
             {
-                var response = await _flightService.AddFlightAsync(flight);
                 if (response.Succes==true)
                 {
                     return Ok(response);
@@ -81,7 +120,11 @@ namespace FightApi.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(new
+                {
+                    message = ex,
+                    statusCode = "500"
+                });
             }
         }
         

@@ -25,7 +25,7 @@ namespace Core.ManagerSerice
             _appDbContext = appDbContext;
             //_autoMapper = autoMapper;
         }
-        private async Task<Document> IsDocumentSavedAsync(DocumentRequest documentRequest)
+        public async Task<Document> IsDocumentSavedAsync(DocumentRequest documentRequest)
         {
             var uploadDirectory = Path.Combine(Directory.GetCurrentDirectory() , "Shares" , "Documents");
             if (!Directory.Exists(uploadDirectory))

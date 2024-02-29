@@ -11,8 +11,8 @@ namespace Models.Entity.Document
     public class Document : FileEntity
     {
         public int FlightId { get; set; }
-        [ForeignKey("FlightId")]
-        public Flight Filght { get; set; }
+        //[ForeignKey("FlightId")]
+        //public Flight Filght { get; set; }
 
     }
 }

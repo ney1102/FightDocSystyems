@@ -7,48 +7,61 @@ using Core.InterfaceService;
 using Microsoft.EntityFrameworkCore;
 using Models.Context;
 using Models.DTOs;
+using Models.DTOs.Document;
 using Models.DTOs.Fight;
 using Models.Entity.Fight;
-
+using DocumentEntity = Models.Entity.Document.Document;
 namespace Core.ManagerSerice
 {
     public class FlightService:IFlightService
     {
         private readonly AppDbContext _appDbContext;
-        public FlightService(AppDbContext appDbContext)
+        private readonly IDocumentService _documentService;
+        public FlightService(AppDbContext appDbContext, IDocumentService documentService)
         {
             _appDbContext = appDbContext;
+            _documentService = documentService;
         }
         private async Task<FlightResponse> ConvertToFlightResponse(string flightNo)
         {
             var result = await  _appDbContext.Flight
                                              .Where(f => f.Active == 1 && f.Del_flag == 0 && f.FlightNo == flightNo)
-                                             .Include(f => f.DepartureStation)
-                                             .Include(f => f.ArrivalStation)
-                                             .Include(f=>f.Documents.Where(d => d.Active == 1 && d.Del_flag == 0 && d.FlightId == f.Id))
-                                             .FirstOrDefaultAsync();
+                                             .Select(f=> new FlightResponse
+                                             {
+                                                 FlightNo = f.FlightNo,
+                                                 Route = $"{f.DepartureStation.Code} - {f.ArrivalStation.Code}",
+                                                 DepartureDate = f.DepartureDate,
+                                                 Documents = f.Documents.Select(d => new DocumentResponse
+                                                 {
+                                                     DocumentName = d.DocumentName,
+                                                     DocumentType = d.DocumentType,
+                                                     DocumentVersion = d.DocumentVersion,
+                                                     Path = d.Path,
+                                                 }).ToList()
+                                             }).FirstOrDefaultAsync();
+
             if (result != null)
             {
-                return new FlightResponse
-                {
-                    FlightNo = result.FlightNo,
-                    Route = $"{result.DepartureStation.Code} - {result.ArrivalStation.Code}",
-                    DepartureDate = result.DepartureDate,
-                    Documents = result.Documents
-                };
+                return result;
             }
 
             return null;
         }
         public async Task<IEnumerable<FlightResponse>> ConvertFlightsToResponses(IEnumerable<Flight> flights)
         {
-            return flights.Select(flight => new FlightResponse
+            return flights.Select(f => new FlightResponse
             {
-                FlightNo = flight.FlightNo,
-                Route = $"{flight.DepartureStation.Code} - {flight.ArrivalStation.Code}",
-                DepartureDate = flight.DepartureDate,
-                Documents = flight.Documents,
-            });;
+                FlightNo = f.FlightNo,
+                Route = $"{f.DepartureStation.Code} - {f.ArrivalStation.Code}",
+                DepartureDate = f.DepartureDate,
+                Documents = f.Documents.Select(d => new DocumentResponse
+                {
+                    DocumentName = d.DocumentName,
+                    DocumentType = d.DocumentType,
+                    DocumentVersion = d.DocumentVersion,
+                    Path = d.Path,
+                }).ToList()
+            });
         }
         public async Task<Response<IEnumerable<FlightResponse>>> GetAllFlightAsync()
         {
@@ -96,10 +109,20 @@ namespace Core.ManagerSerice
                 CreatedBy = 5,
                 UpdatedBy = 5,
             };
-
+            
             _appDbContext.Flight.Add(newFlight);
             await _appDbContext.SaveChangesAsync();
-
+            if (flightRequest.Document != null)
+            {
+                var doc = new DocumentRequest
+                {
+                    DocumentDetail = flightRequest.Document,
+                    DocumentTypeId = 1,
+                    FlightId = newFlight.Id,
+                };
+                _documentService.IsDocumentSavedAsync(doc);
+               
+            }
             return newFlight;
         }
         public async Task<Response<FlightResponse>> AddFlightAsync(FlightRequest flight)
@@ -121,15 +144,88 @@ namespace Core.ManagerSerice
                 if (data != null)
                 {
                     response.Data = data;
-                }
                     response.StatusCode = 201;
                     response.Message = "Added new flight successfully";
                     response.Succes = true;
+                }
             }
             catch (Exception ex)
             {
                 response.Message = $"Error: {ex.Message}";
                 response.StatusCode = 500; 
+                response.Succes = false;
+            }
+            return response;
+        }
+        public async Task<Response<IEnumerable<FlightResponse>>> GetFlightsByDepartureAsync(int departureId)
+        {
+            var response = new Response<IEnumerable<FlightResponse>>();
+            try
+            {
+                var flightsByDeparture = await _appDbContext.Flight.Where(
+                                                            f => f.Active == 1 && 
+                                                            f.Del_flag == 0 && 
+                                                            f.DepartureStationID == departureId )
+                                                        .Include(f => f.DepartureStation)
+                                                        .Include(f => f.ArrivalStation)
+                                                        .Include(f => f.Documents.Where(d => d.Active == 1))
+                                                        .ToListAsync();
+                var result = await ConvertFlightsToResponses(flightsByDeparture);
+                if (result != null && result.Any())
+                {                    
+                    response.Data = result;
+                    response.StatusCode = 200;
+                    response.Message = $"Retrieve flights departing from \"{flightsByDeparture.First().DepartureStation.Name}\" successfully";
+                    response.Succes = true;                    
+                }
+                else
+                {
+                    response.StatusCode = 404;
+                    response.Message = "No Flights found";
+                    response.Succes = false;
+                }
+            }
+            catch(Exception ex)
+            {
+                response.Message = $"Error: {ex.Message}";
+                response.StatusCode = 500;
+                response.Succes = false;
+            }
+            return response;
+        }
+
+        public async Task<Response<IEnumerable<FlightResponse>>> GetFlightsByArrivalAsync(int arrivalId)
+        {
+            var response = new Response<IEnumerable<FlightResponse>>();
+            try
+            {
+                var flightsByDeparture = await _appDbContext.Flight.Where(
+                                                            f => f.Active == 1 &&
+                                                            f.Del_flag == 0 &&
+                                                            f.ArrivalStationID == arrivalId)
+                                                        .Include(f => f.DepartureStation)
+                                                        .Include(f => f.ArrivalStation)
+                                                        .Include(f => f.Documents.Where(d => d.Active == 1))
+                                                        .ToListAsync();
+                var result = await ConvertFlightsToResponses(flightsByDeparture);
+                if (result != null && result.Any())
+                {
+                    response.Data = result;
+                    response.StatusCode = 200;
+                    response.Message = $"Retrieve flights arriving at \"{flightsByDeparture.First().ArrivalStation.Name}\" airport successfully";
+                    response.Succes = true;
+                }
+                else
+                {
+                    response.StatusCode = 404;
+                    response.Message = "No Flights found";
+                    response.Succes = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Message = $"Error: {ex.Message}";
+                response.StatusCode = 500;
                 response.Succes = false;
             }
             return response;

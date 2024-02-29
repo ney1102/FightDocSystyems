@@ -209,13 +209,11 @@ namespace Models.Migrations
 
             modelBuilder.Entity("Models.Entity.Document.Document", b =>
                 {
-                    b.HasOne("Models.Entity.Fight.Flight", "Filght")
+                    b.HasOne("Models.Entity.Fight.Flight", null)
                         .WithMany("Documents")
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Filght");
                 });
 
             modelBuilder.Entity("Models.Entity.Fight.Flight", b =>
